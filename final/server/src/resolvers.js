@@ -29,6 +29,16 @@ module.exports = {
     me: async (_, __, { dataSources }) =>
       dataSources.userAPI.findOrCreateUser(),
   },
+  Mission: {
+    // make sure the default size is 'large' in case user doesn't specify
+    missionPatch: (mission, { size } = { size: 'LARGE' }) => {
+      {
+        return size === 'SMALL'
+          ? mission.missionPatchSmall
+          : mission.missionPatchLarge;
+      }
+    },
+  },
   Mutation: {
     bookTrips: async (_, { launchIds }, { dataSources }) => {
       const results = await dataSources.userAPI.bookTrips({ launchIds });
@@ -42,7 +52,7 @@ module.exports = {
           results.length === launchIds.length
             ? 'trips booked successfully'
             : `the following launches couldn't be booked: ${launchIds.filter(
-                id => !results.includes(id),
+                id => !results.includes(id)
               )}`,
         launches,
       };
@@ -74,14 +84,6 @@ module.exports = {
   Launch: {
     isBooked: async (launch, _, { dataSources }) =>
       dataSources.userAPI.isBookedOnLaunch({ launchId: launch.id }),
-  },
-  Mission: {
-    // make sure the default size is 'large' in case user doesn't specify
-    missionPatch: (mission, { size } = { size: 'LARGE' }) => {
-      return size === 'SMALL'
-        ? mission.missionPatchSmall
-        : mission.missionPatchLarge;
-    },
   },
   User: {
     trips: async (_, __, { dataSources }) => {

@@ -1,4 +1,4 @@
-const {Sequelize} = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 module.exports.paginateResults = ({
   after: cursor,
@@ -23,7 +23,7 @@ module.exports.paginateResults = ({
       ? []
       : results.slice(
           cursorIndex + 1,
-          Math.min(results.length, cursorIndex + 1 + pageSize),
+          Math.min(results.length, cursorIndex + 1 + pageSize)
         )
     : results.slice(0, pageSize);
 };
@@ -31,7 +31,7 @@ module.exports.paginateResults = ({
 module.exports.createStore = () => {
   const db = new Sequelize({
     dialect: 'sqlite',
-    storage: './store.sqlite'
+    storage: './store.sqlite',
   });
 
   const users = db.define('user', {

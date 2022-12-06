@@ -1,7 +1,9 @@
 require('dotenv').config();
 
 const { ApolloServer } = require('apollo-server');
-const { ApolloServerPluginLandingPageLocalDefault } = require('apollo-server-core');
+const {
+  ApolloServerPluginLandingPageLocalDefault,
+} = require('apollo-server-core');
 const isEmail = require('isemail');
 
 const typeDefs = require('./schema');
@@ -45,7 +47,7 @@ const server = new ApolloServer({
   apollo: {
     key: process.env.APOLLO_KEY,
   },
-  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })]
+  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
 });
 
 // Start our server if we're not in a test env.
